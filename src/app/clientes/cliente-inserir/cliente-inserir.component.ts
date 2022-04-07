@@ -1,4 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { ClienteService } from '../cliente.service';
+
 @Component({
   selector: 'app-cliente-inserir',
   templateUrl: './cliente-inserir.component.html',
@@ -6,19 +9,17 @@ import { Component } from '@angular/core';
 })
 
 export class ClienteInserirComponent {
-  nome: string;
-  fone: string;
-  email: string;
 
-  constructor() {
-    this.nome = "";
-    this.fone = "";
-    this.email = "";
-  }
+  constructor(public clienteService: ClienteService) {}
 
-  onAdicionarCliente() {
-    console.log('inserindo cliente...');
-    console.log({ nome: this.nome, fone: this.fone , email: this.email });
-
+  onAdicionarCliente(form: NgForm) {
+    if (form.invalid) {
+      return;
+    }
+    this.clienteService.adicionarCliente(
+      form.value.nome,
+      form.value.fone,
+      form.value.email
+    )
   }
 }

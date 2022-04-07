@@ -1,35 +1,19 @@
-import { Component, OnInit } from '@angular/core';
-
+import { Component, OnInit, Input } from '@angular/core';
+import { Cliente } from '../cliente.model';
+import { ClienteService } from '../cliente.service';
 @Component({
   selector: 'app-cliente-lista',
   templateUrl: './cliente-lista.component.html',
   styleUrls: ['./cliente-lista.component.css'],
 })
 export class ClienteListaComponent implements OnInit {
-  clientes = [
-    {
-      nome: 'José',
-      fone: '11223344',
-      email: 'jose@email.com',
-    },
-    {
-      nome: 'Maria',
-      fone: '22334455',
-      email: 'maria@email.com',
-    },
-    {
-      nome: 'Ana',
-      fone: '22334455',
-      email: 'ana@email.com',
-    },
-  ];
+  @Input() clientes: Cliente[] = [];
 
-  constructor() {
-    console.log('componente construtor!');
+  constructor(public clienteService: ClienteService) {
+    //console.log('componente construtor!');
   }
 
   ngOnInit(): void {
-    console.log('componente inicializado!');
-    console.log(this.clientes);
+    this.clientes = this.clienteService.getClientes();
   }
 }
